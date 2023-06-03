@@ -1,0 +1,21 @@
+FROM python:3.10.11-slim
+
+COPY ./app/back /app
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    make \
+    cmake \
+    gcc \
+    g++ \
+    build-essential \
+    && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 8080
+
+CMD ["python", "/app/manage.py", "runserver", "0:8080"]

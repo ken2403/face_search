@@ -1,0 +1,25 @@
+#Awarded Nobel Prizes in nature science and literature
+#defaultView:Table
+SELECT DISTINCT ?item ?itemLabel (YEAR(?when) as ?year) ?nobelPrizeNatureLabel ?article_en ?article_ja ?pic ?sexOrGenderLabel ?dateOfBirth ?dateOfDeath ?countryOfCitizenshipLabel
+WHERE {
+  VALUES ?nobelPrizeNature { wd:Q44585 wd:Q38104 wd:Q80061 wd:Q37922 } # chem, phys, bio, literature
+  ?item p:P166 ?awardStat . # … with an awarded(P166) statement
+  ?awardStat ps:P166 ?nobelPrizeNature . # … that has the value Nobel Prize
+  ?awardStat pq:P585 ?when . # when did he receive the Nobel prize
+OPTIONAL {
+  ?article_en schema:about ?item .
+  ?article_en schema:inLanguage "en" .
+  FILTER (SUBSTR(str(?article_en), 1, 25) = "https://en.wikipedia.org/")
+}
+OPTIONAL {
+  ?article_ja schema:about ?item .
+  ?article_ja schema:inLanguage "ja" .
+  FILTER (SUBSTR(str(?article_ja), 1, 25) = "https://ja.wikipedia.org/")
+}
+OPTIONAL { ?item wdt:P18 ?pic . }
+OPTIONAL { ?item wdt:P21 ?sexOrGender . }
+OPTIONAL { ?item wdt:P569 ?dateOfBirth . }
+OPTIONAL { ?item wdt:P570 ?dateOfDeath . }
+OPTIONAL { ?item wdt:P27 ?countryOfCitizenship . }
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
