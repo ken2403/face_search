@@ -1,6 +1,6 @@
 # Nobel laureate face search application
 
-This application uses **AI** to search for faces that resemble past Nobel Prize winners (in physics, chemistry, physiology/medicine, and literature).
+The application takes the user's photo with a webcam and outputs the top three past Nobel Prize winners that resemble the user's face.
 
 ## Usage
 
